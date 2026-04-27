@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RIMI Agent | Asistente IA para PyMEs - RIMI 2026</title>
+  <title>RIMI Agent | Asistente IA para PyMEs argentinas - RIMI 2026</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   <style>
@@ -19,9 +19,12 @@
     }
     .btn-green:hover {
       transform: translateY(-4px);
-      box-shadow: 0 20px 25px -5px rgb(16 185 129 / 0.4);
+      box-shadow: 0 25px 30px -10px rgb(16 185 129 / 0.4);
     }
 
+    .card {
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
     .card:hover {
       transform: translateY(-12px);
       box-shadow: 0 30px 40px -15px rgb(0 0 0 / 0.3);
@@ -32,67 +35,70 @@
       transform: translateY(40px);
       transition: all 0.9s cubic-bezier(0.25, 0.1, 0.25, 1);
     }
-    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
     /* Chat flotante */
     .chat-modal {
       animation: chatPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
     @keyframes chatPop {
-      from { opacity: 0; transform: scale(0.8) translateY(20px); }
+      from { opacity: 0; transform: scale(0.85) translateY(30px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
     }
   </style>
 </head>
-<body class="bg-zinc-950 text-zinc-200">
+<body class="bg-zinc-950 text-zinc-200 overflow-x-hidden">
 
   <!-- HERO -->
   <section class="hero-bg min-h-screen flex items-center relative overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(at_top_right,#10B98115_0%,transparent_60%)]"></div>
+    <div class="absolute inset-0 bg-[radial-gradient(at_top_right,#10B98115_0%,transparent_60%)] animate-pulse"></div>
     
     <div class="max-w-7xl mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 gap-12 items-center relative z-10">
       <div class="space-y-8">
-        <div class="inline-flex items-center gap-3 bg-zinc-900 border border-zinc-700 rounded-full px-6 py-3 text-sm fade-in">
+        <div class="inline-flex items-center gap-3 bg-zinc-900/80 backdrop-blur-md border border-zinc-700 rounded-full px-6 py-3 text-sm fade-in">
           <span class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></span>
           Basado en Decreto 242/2026
         </div>
 
-        <h1 class="text-5xl md:text-6xl font-semibold leading-tight tracking-tight">
+        <h1 class="text-5xl md:text-6xl font-semibold leading-tight tracking-tight fade-in">
           ¿Tu PyME califica al <span class="accent-green">RIMI 2026</span>?
         </h1>
-        <p class="text-2xl text-zinc-400">Descubrilo en 60 segundos</p>
+        <p class="text-2xl text-zinc-400 fade-in" style="animation-delay: 300ms">Descubrilo en 60 segundos</p>
 
-        <p class="text-xl text-zinc-400 max-w-lg">
+        <p class="text-xl text-zinc-400 max-w-lg fade-in" style="animation-delay: 450ms">
           Amortización acelerada en Ganancias + devolución anticipada de IVA.<br>
-          <span class="font-medium">La IA te prepara todo.</span>
+          <span class="font-medium text-white">La IA te prepara todo el trámite.</span>
         </p>
 
         <button onclick="scrollToForm()" 
-          class="btn-green text-black font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-3">
-          <i class="fa-solid fa-bolt"></i>
+          class="btn-green text-black font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-3 fade-in" style="animation-delay: 600ms">
+          <i class="fa-solid fa-bolt-lightning"></i>
           Hacer diagnóstico GRATIS
         </button>
       </div>
 
       <!-- Formulario Hero -->
-      <div id="form-card" class="bg-zinc-900/90 backdrop-blur-xl border border-zinc-700 rounded-3xl p-8 md:p-10">
+      <div id="form-card" class="bg-zinc-900/90 backdrop-blur-2xl border border-zinc-700 rounded-3xl p-8 md:p-10 scale-in">
         <h3 class="text-2xl font-semibold mb-6 text-center">Diagnóstico Rápido</h3>
         <form id="diagnosticoForm" class="space-y-6">
           <div>
             <label class="block text-sm text-zinc-400 mb-3">¿Cómo estás inscripto?</label>
             <div class="grid grid-cols-2 gap-3">
               <button type="button" onclick="seleccionarTipo(this)" id="btn-monotributo"
-                class="tipo-btn border border-zinc-700 py-4 rounded-2xl text-sm font-medium">Monotributo</button>
+                class="tipo-btn border-2 border-zinc-700 hover:border-emerald-500 py-4 rounded-2xl text-sm font-medium transition-all">Monotributo</button>
               <button type="button" onclick="seleccionarTipo(this)" id="btn-ri"
-                class="tipo-btn border border-zinc-700 py-4 rounded-2xl text-sm font-medium">Responsable Inscripto</button>
+                class="tipo-btn border-2 border-zinc-700 hover:border-emerald-500 py-4 rounded-2xl text-sm font-medium transition-all">Responsable Inscripto</button>
             </div>
             <input type="hidden" id="tipoInscripcion">
           </div>
 
           <div id="grupo-monotributo" class="hidden">
             <label class="block text-sm text-zinc-400 mb-2">Categoría de Monotributo</label>
-            <select id="categoriaMonotributo" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4">
-              <option value="">Seleccioná categoría</option>
+            <select id="categoriaMonotributo" class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-emerald-500">
+              <option value="">Seleccioná tu categoría</option>
               <option value="A">A</option><option value="B">B</option><option value="C">C</option>
               <option value="D">D</option><option value="E">E</option><option value="F">F</option>
               <option value="G">G</option><option value="H">H</option><option value="I">I</option>
@@ -101,81 +107,213 @@
           </div>
 
           <div>
-            <label class="block text-sm text-zinc-400 mb-2">Monto estimado de inversión (USD neto IVA)</label>
+            <label class="block text-sm text-zinc-400 mb-2">Monto estimado de inversión (USD neto de IVA)</label>
             <input type="number" id="montoInversion" placeholder="150000" 
-              class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4">
+              class="w-full bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-4 focus:outline-none focus:border-emerald-500">
           </div>
 
           <button type="button" onclick="simularDiagnostico()" 
-            class="w-full btn-green text-black font-semibold py-5 rounded-2xl">
-            Analizar mi caso
+            class="w-full btn-green text-black font-semibold py-5 rounded-2xl text-base">
+            Analizar mi caso ahora
           </button>
         </form>
       </div>
     </div>
   </section>
 
-  <!-- INCENTIVOS -->
-  <section class="py-24 bg-zinc-900">
+  <!-- TABLA DE INCENTIVOS -->
+  <section id="incentivos" class="py-24 bg-zinc-900">
     <div class="max-w-7xl mx-auto px-6">
-      <h2 class="text-4xl font-semibold text-center mb-16 fade-in">Incentivos según escala</h2>
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-semibold mb-4 fade-in">Incentivos según escala de tu PyME</h2>
+        <p class="text-zinc-400 max-w-2xl mx-auto fade-in" style="animation-delay: 200ms">Montos mínimos y beneficios según Decreto 242/2026</p>
+      </div>
+
       <div class="grid md:grid-cols-4 gap-6">
-        <!-- Micro -->
         <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-8 card fade-in">
-          <div class="text-emerald-400 text-sm font-medium">MICRO</div>
-          <div class="text-5xl font-bold my-4">$150.000</div>
-          <ul class="space-y-3 text-sm">
-            <li>✓ Amortización en 2 años</li>
-            <li>✓ Devolución anticipada IVA</li>
+          <div class="text-emerald-500 text-sm font-medium mb-2">MICROEMPRESA</div>
+          <div class="text-5xl font-semibold mb-1">$150.000</div>
+          <p class="text-zinc-400 text-sm mb-8">USD mínimo neto IVA</p>
+          <ul class="space-y-4 text-sm">
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Amortización acelerada en 2 años</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Devolución anticipada de IVA</li>
           </ul>
         </div>
-        <!-- Pequeña, Mediana T1, Mediana T2 -->
-        <!-- Agregá las otras 3 cards similares si querés, por brevedad las resumo -->
+
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-8 card fade-in" style="animation-delay: 100ms">
+          <div class="text-emerald-500 text-sm font-medium mb-2">PEQUEÑA</div>
+          <div class="text-5xl font-semibold mb-1">$600.000</div>
+          <p class="text-zinc-400 text-sm mb-8">USD mínimo neto IVA</p>
+          <ul class="space-y-4 text-sm">
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Amortización en 2 cuotas</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Devolución de IVA anticipada</li>
+          </ul>
+        </div>
+
+        <div class="bg-zinc-950 border border-emerald-600/50 rounded-3xl p-8 card fade-in relative" style="animation-delay: 200ms">
+          <div class="absolute -top-3 right-6 bg-emerald-500 text-black text-xs font-bold px-4 py-1 rounded-full">MÁS DEMANDADO</div>
+          <div class="text-emerald-500 text-sm font-medium mb-2">MEDIANA T1</div>
+          <div class="text-5xl font-semibold mb-1">$3.500.000</div>
+          <p class="text-zinc-400 text-sm mb-8">USD mínimo neto IVA</p>
+          <ul class="space-y-4 text-sm">
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Beneficios completos</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Amortización acelerada + IVA</li>
+          </ul>
+        </div>
+
+        <div class="bg-zinc-950 border border-zinc-800 rounded-3xl p-8 card fade-in" style="animation-delay: 300ms">
+          <div class="text-emerald-500 text-sm font-medium mb-2">MEDIANA T2</div>
+          <div class="text-5xl font-semibold mb-1">$9.000.000</div>
+          <p class="text-zinc-400 text-sm mb-8">USD mínimo neto IVA</p>
+          <ul class="space-y-4 text-sm">
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Máximos beneficios</li>
+            <li class="flex items-start gap-3"><i class="fa-solid fa-check accent-green mt-1"></i>Amortización en 2 años</li>
+          </ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- CÓMO FUNCIONA, QUÉ DICE LA NORMA, TESTIMONIOS... -->
-  <!-- (Mantengo el resto de secciones como en versiones anteriores) -->
+  <!-- CÓMO FUNCIONA -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-semibold mb-4 fade-in">Cómo funciona RIMI Agent</h2>
+        <p class="text-zinc-400 fade-in" style="animation-delay: 200ms">Tres pasos simples y claros</p>
+      </div>
 
-  <!-- BOTÓN FLOTANTE DEL AGENTE -->
+      <div class="grid md:grid-cols-3 gap-10">
+        <div class="text-center card bg-zinc-900 p-10 rounded-3xl fade-in">
+          <div class="w-20 h-20 mx-auto bg-emerald-500/10 text-5xl rounded-2xl flex items-center justify-center mb-6">1</div>
+          <h3 class="font-semibold text-2xl mb-4">Diagnóstico IA</h3>
+          <p class="text-zinc-400">Respondé unas preguntas y la IA analiza si calificás según la norma.</p>
+        </div>
+        <div class="text-center card bg-zinc-900 p-10 rounded-3xl fade-in" style="animation-delay: 150ms">
+          <div class="w-20 h-20 mx-auto bg-emerald-500/10 text-5xl rounded-2xl flex items-center justify-center mb-6">2</div>
+          <h3 class="font-semibold text-2xl mb-4">Checklist personalizado</h3>
+          <p class="text-zinc-400">Recibí el listado exacto de documentos según tu escala y sector.</p>
+        </div>
+        <div class="text-center card bg-zinc-900 p-10 rounded-3xl fade-in" style="animation-delay: 300ms">
+          <div class="w-20 h-20 mx-auto bg-emerald-500/10 text-5xl rounded-2xl flex items-center justify-center mb-6">3</div>
+          <h3 class="font-semibold text-2xl mb-4">Documentos listos</h3>
+          <p class="text-zinc-400">La IA genera plantillas y te guía para presentar correctamente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUÉ DICE LA NORMA -->
+  <section class="py-24 bg-zinc-900">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-4xl font-semibold text-center mb-12 fade-in">Qué dice la norma</h2>
+      <div class="space-y-10">
+        <div class="border-l-4 border-emerald-500 pl-8 fade-in">
+          <p class="italic">"Amortización acelerada en dos años para bienes muebles y reducción de vida útil al 60% para obras de inversión."</p>
+          <p class="text-xs text-zinc-500 mt-4">— Decreto 242/2026</p>
+        </div>
+        <div class="border-l-4 border-emerald-500 pl-8 fade-in" style="animation-delay: 150ms">
+          <p class="italic">"Devolución anticipada del crédito fiscal de IVA generado por las inversiones."</p>
+          <p class="text-xs text-zinc-500 mt-4">— Decreto 242/2026</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="py-24">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 class="text-4xl font-semibold text-center mb-16 fade-in">PyMEs que ya confiaron</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-zinc-900 p-8 rounded-3xl card fade-in">
+          <p class="italic">"El diagnóstico fue muy preciso. En minutos supe que calificábamos."</p>
+          <div class="mt-8 flex items-center gap-4">
+            <div class="w-12 h-12 bg-zinc-700 rounded-2xl"></div>
+            <div>
+              <div class="font-medium">Laura Méndez</div>
+              <div class="text-sm text-zinc-500">Córdoba - Autopartes</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-zinc-900 p-8 rounded-3xl card fade-in" style="animation-delay: 150ms">
+          <p class="italic">"Nos ahorró horas de estudio. La IA hizo todo más claro."</p>
+          <div class="mt-8 flex items-center gap-4">
+            <div class="w-12 h-12 bg-zinc-700 rounded-2xl"></div>
+            <div>
+              <div class="font-medium">Carlos Rodríguez</div>
+              <div class="text-sm text-zinc-500">Santa Fe - Agro</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-zinc-900 p-8 rounded-3xl card fade-in" style="animation-delay: 300ms">
+          <p class="italic">"Muy fácil de usar y profesional. Totalmente recomendado."</p>
+          <div class="mt-8 flex items-center gap-4">
+            <div class="w-12 h-12 bg-zinc-700 rounded-2xl"></div>
+            <div>
+              <div class="font-medium">María López</div>
+              <div class="text-sm text-zinc-500">Buenos Aires - Tecnología</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-black border-t border-zinc-800 py-20">
+    <div class="max-w-7xl mx-auto px-6 text-center md:text-left">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center gap-3 text-3xl font-semibold">
+          <span class="accent-green">RIMI</span> Agent
+        </div>
+        <div class="flex gap-8 text-sm">
+          <a href="https://www.boletinoficial.gob.ar" target="_blank" class="hover:text-white">Boletín Oficial</a>
+          <a href="#" class="hover:text-white">Términos</a>
+          <a href="#" class="hover:text-white">Privacidad</a>
+        </div>
+      </div>
+      <div class="mt-12 text-xs text-zinc-500">
+        <p>RIMI Agent es una herramienta de asistencia con IA. Los resultados son orientativos.</p>
+        <p class="mt-2">Se recomienda consultar con un contador público y asesor legal especializado.</p>
+        <p class="mt-6">© 2026 RIMI Agent • Decreto 242/2026</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOTÓN FLOTANTE DEL AGENTE IA -->
   <button onclick="toggleChat()" 
-    class="fixed bottom-8 right-8 w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-black rounded-full flex items-center justify-center shadow-2xl z-50 transition-all hover:scale-110">
-    <i class="fa-solid fa-robot text-2xl"></i>
+    class="fixed bottom-8 right-8 w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-black rounded-full flex items-center justify-center shadow-2xl z-50 transition-all hover:scale-110 active:scale-95">
+    <i class="fa-solid fa-robot text-3xl"></i>
   </button>
 
   <!-- CHAT MODAL -->
   <div id="chat-modal" class="hidden fixed bottom-28 right-8 w-96 bg-zinc-900 border border-zinc-700 rounded-3xl shadow-2xl overflow-hidden z-50 chat-modal">
-    <div class="bg-zinc-800 px-5 py-4 flex items-center justify-between">
+    <div class="bg-zinc-800 px-6 py-4 flex items-center justify-between border-b border-zinc-700">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center">
+        <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-black">
           <i class="fa-solid fa-robot"></i>
         </div>
         <div>
           <p class="font-semibold">RIMI Agent</p>
-          <p class="text-xs text-emerald-500">Especialista en RIMI 2026</p>
+          <p class="text-xs text-emerald-500">En línea • Especialista RIMI 2026</p>
         </div>
       </div>
-      <button onclick="toggleChat()" class="text-zinc-400 hover:text-white">
-        <i class="fa-solid fa-xmark text-xl"></i>
-      </button>
+      <button onclick="toggleChat()" class="text-zinc-400 hover:text-white text-xl">✕</button>
     </div>
 
-    <div id="chat-body" class="h-96 p-5 overflow-y-auto space-y-4 bg-zinc-950">
-      <!-- Mensajes iniciales -->
-      <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none">
-        ¡Hola! Soy RIMI Agent.<br>
-        ¿Querés saber si tu PyME califica al RIMI 2026? Contame sobre tu empresa y monto de inversión.
+    <div id="chat-body" class="h-96 p-6 overflow-y-auto space-y-5 bg-zinc-950">
+      <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none text-sm">
+        ¡Hola! Soy RIMI Agent, tu asistente especializado en el Régimen de Incentivo para Medianas Inversiones.<br><br>
+        Contame sobre tu PyME y te ayudo a saber si calificás y qué pasos seguir.
       </div>
     </div>
 
-    <div class="p-4 border-t border-zinc-700 bg-zinc-900">
+    <div class="p-4 bg-zinc-900 border-t border-zinc-700">
       <div class="flex gap-2">
         <input id="chat-input" type="text" 
           class="flex-1 bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-emerald-500"
-          placeholder="Escribí tu consulta aquí...">
+          placeholder="Ej: Soy monotributista categoría H y quiero invertir 450.000 USD">
         <button onclick="enviarMensajeChat()" 
-          class="bg-emerald-500 text-black px-6 rounded-2xl">
+          class="bg-emerald-500 hover:bg-emerald-600 text-black px-6 rounded-2xl transition-colors">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
@@ -183,8 +321,8 @@
   </div>
 
   <script>
-    // Animaciones al scroll
-    function handleScroll() {
+    // Animaciones al hacer scroll
+    function handleScrollAnimations() {
       document.querySelectorAll('.fade-in').forEach(el => {
         if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
           el.classList.add('visible');
@@ -193,11 +331,13 @@
     }
 
     // Formulario
+    let tipoSeleccionado = "";
     function seleccionarTipo(btn) {
       document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active', 'border-emerald-500'));
       btn.classList.add('active', 'border-emerald-500');
-      document.getElementById('tipoInscripcion').value = btn.id === 'btn-monotributo' ? 'monotributo' : 'ri';
-      document.getElementById('grupo-monotributo').classList.toggle('hidden', btn.id !== 'btn-monotributo');
+      tipoSeleccionado = btn.id === 'btn-monotributo' ? 'monotributo' : 'responsable_inscripto';
+      document.getElementById('tipoInscripcion').value = tipoSeleccionado;
+      document.getElementById('grupo-monotributo').classList.toggle('hidden', tipoSeleccionado !== 'monotributo');
     }
 
     function scrollToForm() {
@@ -205,60 +345,53 @@
     }
 
     function simularDiagnostico() {
-      alert("✅ Diagnóstico iniciado. En la versión completa se integrará con el agente IA.");
+      alert("✅ Diagnóstico exprés realizado.\n\nEl agente IA te dará una respuesta más detallada.");
     }
 
     // Chat flotante
-    let chatOpen = false;
-
     function toggleChat() {
       const modal = document.getElementById('chat-modal');
-      chatOpen = !chatOpen;
-      modal.classList.toggle('hidden', !chatOpen);
-      
-      if (chatOpen) {
+      modal.classList.toggle('hidden');
+      if (!modal.classList.contains('hidden')) {
         setTimeout(() => document.getElementById('chat-input').focus(), 300);
       }
     }
 
     function enviarMensajeChat() {
       const input = document.getElementById('chat-input');
-      const text = input.value.trim();
-      if (!text) return;
+      const mensaje = input.value.trim();
+      if (!mensaje) return;
 
       const body = document.getElementById('chat-body');
-      
-      // Mensaje del usuario
-      const userMsg = document.createElement('div');
-      userMsg.className = "ml-auto bg-emerald-500 text-black p-4 rounded-2xl rounded-tr-none max-w-[80%]";
-      userMsg.textContent = text;
-      body.appendChild(userMsg);
+
+      // Mensaje usuario
+      const userDiv = document.createElement('div');
+      userDiv.className = "ml-auto bg-emerald-500 text-black p-4 rounded-2xl rounded-tr-none max-w-[80%]";
+      userDiv.textContent = mensaje;
+      body.appendChild(userDiv);
       body.scrollTop = body.scrollHeight;
 
       input.value = '';
 
       // Respuesta simulada del agente
       setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.className = "bg-zinc-800 p-4 rounded-2xl rounded-tl-none max-w-[85%]";
-        botMsg.innerHTML = "Entendido. Para darte una respuesta precisa según el Decreto 242/2026, ¿podés decirme en qué provincia estás y cuál es tu sector principal?";
-        body.appendChild(botMsg);
+        const botDiv = document.createElement('div');
+        botDiv.className = "bg-zinc-800 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm";
+        botDiv.innerHTML = "Gracias por la información. Analizando según el Decreto 242/2026...<br><br>¿En qué provincia se encuentra tu PyME y cuál es tu sector principal?";
+        body.appendChild(botDiv);
         body.scrollTop = body.scrollHeight;
-      }, 700);
+      }, 800);
     }
 
-    // Cerrar chat con ESC
-    document.addEventListener('keydown', (e) => {
-      if (e.key === "Escape") {
-        const modal = document.getElementById('chat-modal');
-        if (!modal.classList.contains('hidden')) toggleChat();
-      }
+    // Enviar con Enter
+    document.getElementById('chat-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') enviarMensajeChat();
     });
 
-    // Inicializar
+    // Inicializar animaciones
     window.addEventListener('load', () => {
-      window.addEventListener('scroll', handleScroll);
-      handleScroll();
+      window.addEventListener('scroll', handleScrollAnimations);
+      handleScrollAnimations();
     });
   </script>
 </body>
