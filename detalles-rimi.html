@@ -10,7 +10,9 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
     body { font-family: 'Inter', system-ui, sans-serif; }
     .accent-green { color: #10B981; }
-    .card-hover:hover { transform: translateY(-8px); }
+    .card-hover:hover { transform: translateY(-10px); transition: all 0.4s ease; }
+    .benefit-item { transition: all 0.3s ease; }
+    .benefit-item:hover { background-color: #052e16; }
   </style>
 </head>
 <body class="bg-zinc-950 text-zinc-200">
@@ -21,56 +23,154 @@
       <a href="index.html" class="flex items-center gap-3 text-2xl font-semibold">
         <span class="accent-green">RIMI</span> Agent
       </a>
-      <a href="index.html" class="text-zinc-400 hover:text-white flex items-center gap-2">
-        <i class="fa-solid fa-arrow-left"></i> Volver al inicio
+      <a href="index.html" class="text-zinc-400 hover:text-white flex items-center gap-2 text-sm font-medium">
+        <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
       </a>
     </div>
   </nav>
 
   <div class="max-w-7xl mx-auto px-6 py-16">
 
-    <h1 class="text-5xl font-semibold text-center mb-4">Detalles Completos del RIMI 2026</h1>
+    <h1 class="text-5xl font-semibold text-center mb-3">Detalles Completos del RIMI 2026</h1>
     <p class="text-center text-zinc-400 text-xl max-w-3xl mx-auto">
-      Todo lo que necesitás saber sobre el Decreto 242/2026 y los beneficios según la escala de tu PyME
+      Beneficios fiscales detallados por escala + explicación del Decreto 242/2026
     </p>
 
     <!-- DECRETO 242/2026 -->
-    <section class="mt-20">
-      <h2 class="text-4xl font-semibold mb-10 border-l-4 border-emerald-500 pl-6">¿Qué es el Decreto 242/2026?</h2>
-      <div class="bg-zinc-900 rounded-3xl p-10">
-        <p class="text-lg leading-relaxed">
-          El <strong>Decreto 242/2026</strong>, publicado el 13 de abril de 2026 en el Boletín Oficial, reglamenta el 
-          <strong>Régimen de Incentivo para Medianas Inversiones (RIMI)</strong> creado por la Ley 27.802.
+    <section class="mt-20 mb-24">
+      <h2 class="text-4xl font-semibold mb-10 border-l-4 border-emerald-500 pl-6">El Decreto 242/2026 explicado</h2>
+      <div class="bg-zinc-900 rounded-3xl p-10 leading-relaxed">
+        <p class="text-lg">
+          El <strong>Decreto 242/2026</strong> (publicado el 13 de abril de 2026) reglamenta el <strong>Régimen de Incentivo para Medianas Inversiones (RIMI)</strong>, creado originalmente por la Ley 27.802.
         </p>
         <p class="mt-6 text-lg">
-          Este régimen busca impulsar la inversión productiva en PyMEs mediante dos beneficios fiscales concretos:
+          Su objetivo es fomentar la inversión productiva en PyMEs argentinas mediante dos beneficios fiscales principales:
         </p>
-        <ul class="mt-8 space-y-6 text-lg">
-          <li class="flex gap-4">
-            <span class="text-emerald-500 text-2xl">01</span>
-            <div>
-              <strong>Amortización acelerada en el Impuesto a las Ganancias:</strong> Permite amortizar los bienes de capital en solo 2 años (en lugar de la vida útil habitual de 8 a 10 años).
-            </div>
-          </li>
-          <li class="flex gap-4">
-            <span class="text-emerald-500 text-2xl">02</span>
-            <div>
-              <strong>Devolución anticipada del IVA:</strong> El crédito fiscal generado por las inversiones se devuelve a los <strong>3 meses</strong> en lugar de los 6 meses habituales.
-            </div>
-          </li>
-        </ul>
-        <div class="mt-10 p-6 bg-zinc-800 rounded-2xl text-sm">
-          <strong>Importante:</strong> La resolución conjunta de ARCA, Secretaría de Agricultura y Secretaría de Energía aún no ha sido publicada (plazo máximo aproximado: 13 de mayo de 2026). Hasta entonces no se puede formalizar la adhesión.
+        <div class="grid md:grid-cols-2 gap-8 mt-10">
+          <div class="bg-zinc-950 p-8 rounded-2xl">
+            <h3 class="text-emerald-400 font-semibold text-xl mb-4">1. Amortización Acelerada en Ganancias</h3>
+            <p>Los bienes de capital nuevos se pueden amortizar en <strong>2 años</strong> en lugar de su vida útil habitual (generalmente 8 a 10 años).</p>
+          </div>
+          <div class="bg-zinc-950 p-8 rounded-2xl">
+            <h3 class="text-emerald-400 font-semibold text-xl mb-4">2. Devolución Anticipada de IVA</h3>
+            <p>El crédito fiscal de IVA generado por la inversión se devuelve en <strong>3 meses</strong> (en vez de 6 meses).</p>
+          </div>
+        </div>
+        <div class="mt-10 p-6 bg-amber-950 border border-amber-700 rounded-2xl text-sm">
+          <strong>Nota importante:</strong> La resolución conjunta operativa de ARCA, Secretaría de Agricultura y Secretaría de Energía aún no ha sido publicada (plazo máximo aproximado: 13 de mayo de 2026). Hasta entonces no se puede realizar la adhesión formal.
         </div>
       </div>
     </section>
 
     <!-- BENEFICIOS POR ESCALA -->
-    <section class="mt-24">
-      <h2 class="text-4xl font-semibold mb-12 text-center">Beneficios según escala de PyME</h2>
+    <section>
+      <h2 class="text-4xl font-semibold text-center mb-16">Beneficios según la escala de tu PyME</h2>
 
-      <!-- Micro -->
-      <div class="bg-zinc-900 rounded-3xl p-10 mb-12 card-hover">
-        <div class="flex justify-between items-start mb-8">
-          <div>
-            <span class="text-emerald-400
+      <!-- Microempresa -->
+      <div class="bg-zinc-900 rounded-3xl p-10 mb-16 card-hover">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+          <div class="flex-1">
+            <span class="inline-block bg-emerald-500/10 text-emerald-400 px-5 py-2 rounded-full text-sm font-medium">MICROEMPRESA</span>
+            <h3 class="text-3xl font-semibold mt-4">Monto mínimo de inversión: <span class="text-emerald-400">$150.000 USD</span></h3>
+            <p class="text-zinc-400 mt-3">Ideal para empresas que están dando el primer gran salto en productividad.</p>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-lg mb-5 text-emerald-400">Beneficios detallados</h4>
+            <ul class="space-y-4">
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Amortización acelerada:</strong> 2 años en Ganancias para bienes muebles y BIT.</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Devolución de IVA:</strong> Anticipada a los 3 meses.</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Bienes especiales:</strong> 100% de amortización en 1 ejercicio (riego, eficiencia energética, mallas antigranizo, semovientes de genética superior).</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pequeña -->
+      <div class="bg-zinc-900 rounded-3xl p-10 mb-16 card-hover">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+          <div class="flex-1">
+            <span class="inline-block bg-emerald-500/10 text-emerald-400 px-5 py-2 rounded-full text-sm font-medium">PEQUEÑA EMPRESA</span>
+            <h3 class="text-3xl font-semibold mt-4">Monto mínimo de inversión: <span class="text-emerald-400">$600.000 USD</span></h3>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-lg mb-5 text-emerald-400">Beneficios detallados</h4>
+            <ul class="space-y-4">
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Amortización acelerada:</strong> 2 años para bienes de capital y BIT.</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Devolución anticipada de IVA:</strong> A los 3 meses.</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Mayor capacidad:</strong> Permite inversiones más ambiciosas manteniendo los mismos beneficios fiscales.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mediana Tramo 1 -->
+      <div class="bg-zinc-900 rounded-3xl p-10 mb-16 card-hover border border-emerald-600/30">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+          <div class="flex-1">
+            <span class="inline-block bg-emerald-500/10 text-emerald-400 px-5 py-2 rounded-full text-sm font-medium">MEDIANA TRAMO 1</span>
+            <h3 class="text-3xl font-semibold mt-4">Monto mínimo de inversión: <span class="text-emerald-400">$3.500.000 USD</span></h3>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-lg mb-5 text-emerald-400">Beneficios detallados</h4>
+            <ul class="space-y-4">
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Amortización acelerada completa</strong> en Ganancias (2 años).</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Devolución anticipada de IVA</strong> (3 meses).</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Mayor impacto fiscal:</strong> Ideal para empresas en etapa de expansión fuerte.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mediana Tramo 2 -->
+      <div class="bg-zinc-900 rounded-3xl p-10 card-hover">
+        <div class="flex flex-col md:flex-row justify-between items-start gap-8">
+          <div class="flex-1">
+            <span class="inline-block bg-emerald-500/10 text-emerald-400 px-5 py-2 rounded-full text-sm font-medium">MEDIANA TRAMO 2</span>
+            <h3 class="text-3xl font-semibold mt-4">Monto mínimo de inversión: <span class="text-emerald-400">$9.000.000 USD</span></h3>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-semibold text-lg mb-5 text-emerald-400">Beneficios detallados</h4>
+            <ul class="space-y-4">
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Todos los beneficios del RIMI</strong> con máxima escala.</span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Amortización acelerada + devolución rápida de IVA.</strong></span></li>
+              <li class="benefit-item flex gap-4 bg-zinc-950 p-5 rounded-2xl"><i class="fa-solid fa-check text-emerald-500 mt-1"></i><span><strong>Acceso a mayores volúmenes de inversión</strong> con fuerte impacto fiscal.</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OTROS INCENTIVOS PARA PyMEs -->
+    <section class="mt-24">
+      <h2 class="text-4xl font-semibold text-center mb-16">Otros incentivos importantes para PyMEs en Argentina</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-zinc-900 p-8 rounded-3xl">
+          <h3 class="text-xl font-semibold mb-4 text-emerald-400">Régimen de Promoción de la Economía del Conocimiento (Ley 27.506)</h3>
+          <p class="text-zinc-400">Reducción de hasta 60% en Ganancias + beneficios en aportes patronales para empresas de software, IA, biotecnología, etc.</p>
+        </div>
+        <div class="bg-zinc-900 p-8 rounded-3xl">
+          <h3 class="text-xl font-semibold mb-4 text-emerald-400">Crédito Fiscal por Capacitación</h3>
+          <p class="text-zinc-400">Hasta el 8% de la masa salarial deducible por gastos en formación de personal.</p>
+        </div>
+        <div class="bg-zinc-900 p-8 rounded-3xl">
+          <h3 class="text-xl font-semibold mb-4 text-emerald-400">Financiamiento a través de SGR y Bancos</h3>
+          <p class="text-zinc-400">Líneas de crédito subsidiadas y avales para PyMEs a través de Sociedades de Garantía Recíproca.</p>
+        </div>
+        <div class="bg-zinc-900 p-8 rounded-3xl">
+          <h3 class="text-xl font-semibold mb-4 text-emerald-400">Beneficios provinciales</h3>
+          <p class="text-zinc-400">Muchos provincias ofrecen exenciones adicionales en Ingresos Brutos e inmobiliario para nuevas inversiones.</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-black py-12 text-center text-xs text-zinc-500 border-t border-zinc-800">
+    <p>RIMI Agent es una herramienta de orientación. Todos los datos son informativos y basados en el Decreto 242/2026.</p>
+    <p class="mt-2">Se recomienda siempre consultar con un contador público matriculado.</p>
+    <p class="mt-6">© 2026 RIMI Agent</p>
+  </footer>
+
+</body>
+</html>
