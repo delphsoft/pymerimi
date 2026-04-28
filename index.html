@@ -40,7 +40,6 @@
       transform: translateY(0);
     }
 
-    /* Chat flotante */
     .chat-modal {
       animation: chatPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
@@ -279,41 +278,40 @@
     </div>
   </footer>
 
-  <!-- BOTÓN FLOTANTE DEL AGENTE IA -->
+  <!-- ==================== BOTÓN FLOTANTE + CHAT REAL ==================== -->
   <button onclick="toggleChat()" 
     class="fixed bottom-8 right-8 w-16 h-16 bg-emerald-500 hover:bg-emerald-600 text-black rounded-full flex items-center justify-center shadow-2xl z-50 transition-all hover:scale-110 active:scale-95">
     <i class="fa-solid fa-robot text-3xl"></i>
   </button>
 
-  <!-- CHAT MODAL -->
-  <div id="chat-modal" class="hidden fixed bottom-28 right-8 w-96 bg-zinc-900 border border-zinc-700 rounded-3xl shadow-2xl overflow-hidden z-50 chat-modal">
-    <div class="bg-zinc-800 px-6 py-4 flex items-center justify-between border-b border-zinc-700">
+  <!-- CHAT MODAL CON AGENTE INTELIGENTE -->
+  <div id="chat-modal" class="hidden fixed bottom-28 right-8 w-[380px] bg-zinc-900 border border-zinc-700 rounded-3xl shadow-2xl overflow-hidden z-50 chat-modal">
+    <div class="bg-zinc-800 px-6 py-4 flex items-center justify-between border-b border-zinc-700 rounded-t-3xl">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-black">
+        <div class="w-9 h-9 bg-emerald-500 rounded-2xl flex items-center justify-center text-black font-bold">
           <i class="fa-solid fa-robot"></i>
         </div>
         <div>
-          <p class="font-semibold">RIMI Agent</p>
-          <p class="text-xs text-emerald-500">En línea • Especialista RIMI 2026</p>
+          <p class="font-semibold text-white">RIMI Assistant</p>
+          <p class="text-xs text-emerald-500">Especialista en RIMI 2026 • En línea</p>
         </div>
       </div>
-      <button onclick="toggleChat()" class="text-zinc-400 hover:text-white text-xl">✕</button>
+      <button onclick="toggleChat()" class="text-zinc-400 hover:text-white text-2xl leading-none">✕</button>
     </div>
 
-    <div id="chat-body" class="h-96 p-6 overflow-y-auto space-y-5 bg-zinc-950">
-      <div class="bg-zinc-800 p-4 rounded-2xl rounded-tl-none text-sm">
-        ¡Hola! Soy RIMI Agent, tu asistente especializado en el Régimen de Incentivo para Medianas Inversiones.<br><br>
-        Contame sobre tu PyME y te ayudo a saber si calificás y qué pasos seguir.
-      </div>
+    <div id="chat-body" class="h-[420px] p-5 overflow-y-auto bg-zinc-950 space-y-4">
+      <!-- Mensajes dinámicos -->
     </div>
 
-    <div class="p-4 bg-zinc-900 border-t border-zinc-700">
+    <div class="p-4 bg-zinc-900 border-t border-zinc-700 rounded-b-3xl">
       <div class="flex gap-2">
-        <input id="chat-input" type="text" 
-          class="flex-1 bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-3 text-sm focus:outline-none focus:border-emerald-500"
-          placeholder="Ej: Soy monotributista categoría H y quiero invertir 450.000 USD">
-        <button onclick="enviarMensajeChat()" 
-          class="bg-emerald-500 hover:bg-emerald-600 text-black px-6 rounded-2xl transition-colors">
+        <input 
+          id="chat-input" 
+          type="text" 
+          class="flex-1 bg-zinc-800 border border-zinc-700 rounded-2xl px-5 py-3.5 text-sm focus:outline-none focus:border-emerald-500 placeholder-zinc-500"
+          placeholder="Ej: Mi empresa es Pequeña y quiero invertir 750.000 USD en maquinaria">
+        <button onclick="sendMessage()" 
+          class="bg-emerald-500 hover:bg-emerald-600 w-12 h-12 flex items-center justify-center rounded-2xl transition-colors">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
       </div>
@@ -321,16 +319,122 @@
   </div>
 
   <script>
-    // Animaciones al hacer scroll
-    function handleScrollAnimations() {
-      document.querySelectorAll('.fade-in').forEach(el => {
-        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
-          el.classList.add('visible');
-        }
-      });
+    // ==================== CONFIGURACIÓN DEL AGENTE RIMI ====================
+    const API_URL = "https://api.groq.com/openai/v1/chat/completions";   // ← Cambia si usas OpenAI, Claude, etc.
+    const API_KEY = "gsk_tu_clave_aqui";   // ←←← REEMPLAZA CON TU API KEY REAL
+
+    const SYSTEM_PROMPT = `Eres **RIMI Assistant**, un asistente experto y amigable para PyMEs argentinas que quieren aplicar al Régimen de Incentivo para Medianas Inversiones (RIMI - Decreto 242/2026).
+
+Fecha actual: Abril 2026. 
+Importante: La resolución conjunta de ARCA + Secretaría de Agricultura + Secretaría de Energía aún **no ha sido publicada** (plazo máximo ~13 de mayo 2026). 
+
+Tienes 4 etapas internas que debes manejar de forma secuencial y natural:
+
+**Etapa 1: Diagnóstico de Elegibilidad** (Inicio por defecto)
+- Preguntar: Categoría MiPyME (Micro, Pequeña, Mediana Tramo 1 o 2), certificado vigente, monto estimado de inversión neto de IVA, tipo principal de inversión.
+- Montos mínimos (netos de IVA): Micro 150.000, Pequeña 600.000, Mediana T1 3.500.000, Mediana T2 9.000.000 USD.
+- Al finalizar dar veredicto claro con probabilidad + razones + disclaimer.
+- Si califica o tiene alta probabilidad, preguntar si quiere la guía paso a paso.
+
+**Etapa 2: Guía y Checklist Personalizado**
+- Generar checklist de documentos necesarios.
+- Explicar timeline actual.
+- Mostrar beneficios según escala y ejemplos simples.
+- Preguntar si quiere generar documentos.
+
+**Etapa 3: Generación de Documentos**
+- Ayudar a redactar descripción técnica, plan de inversión, cálculos en USD, simulación de beneficios.
+
+**Reglas importantes:**
+- Mantén memoria de la categoría MiPyME, monto estimado y etapa actual.
+- Avanza de etapa cuando sea lógico o el usuario lo pida.
+- Usa lenguaje claro, amigable y sin jerga técnica excesiva.
+- Siempre incluye al final de cada respuesta importante este disclaimer: 
+  "Esto es una guía informativa basada en el Decreto 242/2026. No constituye asesoramiento fiscal ni legal. Recomiendo consultar con un contador público matriculado antes de cualquier acción."
+- Responde siempre en español.`;
+
+    let conversationHistory = [
+      { role: "system", content: SYSTEM_PROMPT }
+    ];
+
+    // ==================== FUNCIONES DEL CHAT ====================
+    function addMessage(text, isUser = false) {
+      const body = document.getElementById('chat-body');
+      const div = document.createElement('div');
+      
+      if (isUser) {
+        div.className = "ml-auto bg-emerald-500 text-black p-4 rounded-2xl rounded-tr-none max-w-[80%]";
+        div.textContent = text;
+      } else {
+        div.className = "bg-zinc-800 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm leading-relaxed";
+        div.innerHTML = text;
+      }
+      
+      body.appendChild(div);
+      body.scrollTop = body.scrollHeight;
     }
 
-    // Formulario
+    async function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const message = input.value.trim();
+      if (!message) return;
+
+      addMessage(message, true);
+      input.value = '';
+
+      const loadingDiv = document.createElement('div');
+      loadingDiv.id = 'loading';
+      loadingDiv.className = "bg-zinc-800 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm";
+      loadingDiv.textContent = "Pensando...";
+      document.getElementById('chat-body').appendChild(loadingDiv);
+      document.getElementById('chat-body').scrollTop = document.getElementById('chat-body').scrollHeight;
+
+      conversationHistory.push({ role: "user", content: message });
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`
+          },
+          body: JSON.stringify({
+            model: "llama3-70b-8192",
+            messages: conversationHistory,
+            temperature: 0.7,
+            max_tokens: 1000
+          })
+        });
+
+        const data = await response.json();
+        const botReply = data.choices[0].message.content;
+
+        document.getElementById('loading').remove();
+        addMessage(botReply);
+        conversationHistory.push({ role: "assistant", content: botReply });
+
+      } catch (error) {
+        document.getElementById('loading').remove();
+        addMessage("Lo siento, hubo un problema de conexión. Por favor intentá de nuevo.");
+      }
+    }
+
+    function toggleChat() {
+      const modal = document.getElementById('chat-modal');
+      modal.classList.toggle('hidden');
+      
+      if (!modal.classList.contains('hidden') && document.getElementById('chat-body').children.length <= 1) {
+        setTimeout(() => {
+          addMessage(`
+            ¡Hola! Soy <strong>RIMI Assistant</strong>.<br><br>
+            Te voy a guiar paso a paso con el RIMI 2026 según el Decreto 242/2026.<br><br>
+            Para comenzar, ¿me podés decir cuál es la <strong>categoría de tu MiPyME</strong> (Micro, Pequeña, Mediana Tramo 1 o Tramo 2)?
+          `);
+        }, 400);
+      }
+    }
+
+    // Funciones existentes del formulario
     let tipoSeleccionado = "";
     function seleccionarTipo(btn) {
       document.querySelectorAll('.tipo-btn').forEach(b => b.classList.remove('active', 'border-emerald-500'));
@@ -345,50 +449,23 @@
     }
 
     function simularDiagnostico() {
-      alert("✅ Diagnóstico exprés realizado.\n\nEl agente IA te dará una respuesta más detallada.");
+      alert("✅ Diagnóstico exprés realizado.\n\nEl chat con RIMI Assistant te dará una respuesta más completa y personalizada.");
     }
 
-    // Chat flotante
-    function toggleChat() {
-      const modal = document.getElementById('chat-modal');
-      modal.classList.toggle('hidden');
-      if (!modal.classList.contains('hidden')) {
-        setTimeout(() => document.getElementById('chat-input').focus(), 300);
-      }
-    }
-
-    function enviarMensajeChat() {
-      const input = document.getElementById('chat-input');
-      const mensaje = input.value.trim();
-      if (!mensaje) return;
-
-      const body = document.getElementById('chat-body');
-
-      // Mensaje usuario
-      const userDiv = document.createElement('div');
-      userDiv.className = "ml-auto bg-emerald-500 text-black p-4 rounded-2xl rounded-tr-none max-w-[80%]";
-      userDiv.textContent = mensaje;
-      body.appendChild(userDiv);
-      body.scrollTop = body.scrollHeight;
-
-      input.value = '';
-
-      // Respuesta simulada del agente
-      setTimeout(() => {
-        const botDiv = document.createElement('div');
-        botDiv.className = "bg-zinc-800 p-4 rounded-2xl rounded-tl-none max-w-[85%] text-sm";
-        botDiv.innerHTML = "Gracias por la información. Analizando según el Decreto 242/2026...<br><br>¿En qué provincia se encuentra tu PyME y cuál es tu sector principal?";
-        body.appendChild(botDiv);
-        body.scrollTop = body.scrollHeight;
-      }, 800);
-    }
-
-    // Enviar con Enter
+    // Enviar mensaje con Enter
     document.getElementById('chat-input').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') enviarMensajeChat();
+      if (e.key === 'Enter') sendMessage();
     });
 
-    // Inicializar animaciones
+    // Animaciones al hacer scroll
+    function handleScrollAnimations() {
+      document.querySelectorAll('.fade-in').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight * 0.85) {
+          el.classList.add('visible');
+        }
+      });
+    }
+
     window.addEventListener('load', () => {
       window.addEventListener('scroll', handleScrollAnimations);
       handleScrollAnimations();
