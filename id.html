@@ -1,0 +1,187 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Deducción I+D · Investigación y Desarrollo · RIMI Agent</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F5F2EC;--ink:#1A1916;--ink2:#6B6860;--ink3:#A8A59F;--gold:#C8A84B;--gold2:#E8C96A;--green:#2D6A4F;--green2:#52B788;--border:rgba(26,25,22,0.12);--border2:rgba(26,25,22,0.06);--radius:12px;--serif:'DM Serif Display',Georgia,serif;--sans:'DM Sans',system-ui,sans-serif;}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-user-select:none;user-select:none;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 48px;border-bottom:1px solid var(--border);background:var(--bg);position:sticky;top:0;z-index:100;}
+.nav-logo{font-family:var(--serif);font-size:20px;letter-spacing:-.3px;text-decoration:none;color:var(--ink);}
+.nav-logo span{color:var(--gold);}
+.nav-back{font-size:13px;color:var(--ink2);text-decoration:none;display:flex;align-items:center;gap:6px;transition:color .2s;}
+.nav-back:hover{color:var(--ink);}
+.nav-pill{font-size:11px;background:var(--ink);color:var(--bg);padding:5px 12px;border-radius:999px;letter-spacing:.04em;}
+
+.page-hero{padding:72px 56px 60px;border-bottom:1px solid var(--border);max-width:860px;}
+.breadcrumb{font-size:12px;color:var(--ink3);margin-bottom:20px;display:flex;align-items:center;gap:6px;}
+.breadcrumb a{color:var(--ink3);text-decoration:none;}
+.breadcrumb a:hover{color:var(--ink2);}
+.tag-hero{display:inline-block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;padding:4px 12px;border-radius:999px;margin-bottom:18px;font-weight:500;}
+.tag-a{background:rgba(45,106,79,.12);color:var(--green);}
+.tag-c{background:rgba(200,168,75,.15);color:#8B6D1F;}
+.tag-f{background:rgba(26,25,22,.07);color:var(--ink2);}
+h1{font-family:var(--serif);font-size:clamp(36px,4vw,58px);line-height:1.06;letter-spacing:-1.5px;margin-bottom:18px;}
+.hero-sub{font-size:17px;color:var(--ink2);max-width:600px;line-height:1.7;margin-bottom:28px;}
+.hero-metrics{display:flex;gap:40px;flex-wrap:wrap;}
+.metric{border-left:2px solid var(--gold);padding-left:16px;}
+.metric-val{font-family:var(--serif);font-size:26px;letter-spacing:-.5px;}
+.metric-label{font-size:12px;color:var(--ink3);margin-top:2px;}
+
+.content{display:grid;grid-template-columns:1fr 320px;gap:0;align-items:start;}
+.main-col{padding:56px;border-right:1px solid var(--border);}
+.side-col{padding:40px 36px;position:sticky;top:73px;}
+
+h2{font-family:var(--serif);font-size:26px;letter-spacing:-.3px;margin-bottom:16px;margin-top:40px;}
+h2:first-child{margin-top:0;}
+h3{font-size:15px;font-weight:500;margin-bottom:8px;margin-top:24px;}
+p{color:var(--ink2);margin-bottom:16px;font-size:14px;}
+ul{list-style:none;padding:0;margin-bottom:20px;}
+ul li{font-size:14px;color:var(--ink2);padding:8px 0;border-bottom:1px solid var(--border2);display:flex;gap:10px;align-items:flex-start;}
+ul li::before{content:'→';color:var(--gold);flex-shrink:0;margin-top:1px;}
+ul li:last-child{border-bottom:none;}
+
+.req-box{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-top:28px;}
+.req-box h3{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin-bottom:16px;margin-top:0;}
+.req-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border2);font-size:13px;color:var(--ink2);}
+.req-item:last-child{border-bottom:none;}
+.req-icon{width:22px;height:22px;border-radius:50%;background:rgba(200,168,75,.15);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;color:var(--gold);}
+
+.side-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;margin-bottom:16px;}
+.side-card h4{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;color:var(--ink2);margin-bottom:14px;}
+.side-stat{padding:10px 0;border-bottom:1px solid var(--border2);}
+.side-stat:last-child{border-bottom:none;}
+.side-stat-val{font-family:var(--serif);font-size:22px;letter-spacing:-.3px;}
+.side-stat-label{font-size:12px;color:var(--ink3);}
+
+.btn-bo{display:block;background:var(--ink);color:var(--bg);border:none;padding:13px 20px;border-radius:var(--radius);font-family:var(--sans);font-size:13px;font-weight:500;text-decoration:none;text-align:center;margin-bottom:10px;transition:background .2s;letter-spacing:.01em;}
+.btn-bo:hover{background:#2d2c28;}
+.btn-diag{display:block;background:var(--gold);color:var(--ink);border:none;padding:13px 20px;border-radius:var(--radius);font-family:var(--sans);font-size:13px;font-weight:500;text-decoration:none;text-align:center;transition:background .2s;}
+.btn-diag:hover{background:var(--gold2);}
+.disclaimer{font-size:11px;color:var(--ink3);margin-top:14px;line-height:1.6;padding:12px;background:rgba(26,25,22,.03);border-radius:8px;border:1px solid var(--border2);}
+
+.other-benefits{padding:56px;border-top:1px solid var(--border);}
+.other-benefits h2{font-family:var(--serif);font-size:26px;letter-spacing:-.3px;margin-bottom:28px;}
+.ob-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;}
+.ob-card{border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-decoration:none;display:block;transition:all .2s;}
+.ob-card:hover{border-color:var(--gold);transform:translateY(-1px);}
+.ob-card-name{font-size:14px;font-weight:500;color:var(--ink);margin-bottom:6px;}
+.ob-card-desc{font-size:12px;color:var(--ink3);}
+.ob-card-link{font-size:12px;color:var(--gold);margin-top:10px;display:block;}
+
+footer{padding:28px 56px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--ink3);flex-wrap:wrap;gap:12px;}
+.footer-logo{font-family:var(--serif);font-size:16px;color:var(--ink);}
+.footer-logo span{color:var(--gold);}
+footer a{color:var(--ink3);text-decoration:none;}
+
+@media(max-width:768px){
+  nav{padding:14px 20px;}
+  .page-hero{padding:40px 24px;}
+  .content{grid-template-columns:1fr;}
+  .main-col{padding:32px 24px;border-right:none;}
+  .side-col{padding:24px;border-top:1px solid var(--border);position:static;}
+  .other-benefits{padding:32px 24px;}
+  footer{padding:24px;flex-direction:column;text-align:center;}
+}
+</style>
+</head><body>
+
+<nav>
+  <a class="nav-logo" href="index.html">RIMI <span>Agent</span></a>
+  <a class="nav-back" href="index.html">← Volver al inicio</a>
+  <span class="nav-pill">Decreto 242/2026</span>
+</nav>
+<div class="page-hero">
+  <div class="breadcrumb"><a href="index.html">Inicio</a> / Incentivos / Deducción I+D</div>
+  <span class="tag-hero tag-c">Requiere certificación MINCYT</span>
+  <h1>Deducción I+D</h1>
+  <p class="hero-sub">Amortización acelerada y deducciones especiales en Ganancias para gastos en investigación, desarrollo tecnológico e innovación, con certificación del Ministerio de Ciencia y Tecnología.</p>
+  <div class="hero-metrics">
+    <div class="metric"><div class="metric-val">150%</div><div class="metric-label">Deducción sobre gastos I+D</div></div>
+    <div class="metric"><div class="metric-val">MINCYT</div><div class="metric-label">Certifica el proyecto</div></div>
+    <div class="metric"><div class="metric-val">Acelerada</div><div class="metric-label">Amortización de equipos</div></div>
+  </div>
+</div>
+<div class="content">
+  <div class="main-col">
+    <h2>¿Qué es I+D a efectos fiscales?</h2>
+    <p>Se entiende por investigación y desarrollo (I+D) a las actividades orientadas a obtener nuevos conocimientos, desarrollar nuevos productos o procesos, o mejorar sustancialmente los existentes. El MINCYT certifica que el proyecto califica como I+D, habilitando los beneficios fiscales.</p>
+
+    <h2>Beneficios disponibles</h2>
+    <ul>
+      <li>Deducción del 150% de los gastos en I+D del impuesto a las Ganancias (en lugar del 100% normal)</li>
+      <li>Amortización acelerada de equipamiento y bienes de capital destinados exclusivamente a proyectos de I+D</li>
+      <li>El 50% adicional de deducción es la ventaja fiscal directa: si gastás $100, deducís $150</li>
+      <li>Crédito fiscal por investigadores contratados (si son calificados)</li>
+    </ul>
+
+    <h2>Proyectos que califican</h2>
+    <ul>
+      <li>Desarrollo de software con componente de innovación técnica demostrable</li>
+      <li>Investigación aplicada en biotecnología o procesos industriales</li>
+      <li>Desarrollo de nuevos materiales o procesos productivos</li>
+      <li>Investigación básica vinculada a una actividad comercial</li>
+      <li>Prototipado y desarrollo experimental de nuevos productos</li>
+    </ul>
+
+    <h2>Proceso de certificación</h2>
+    <ul>
+      <li>Presentar el proyecto ante la ANPCyT (Agencia Nacional de Promoción Científica)</li>
+      <li>El MINCYT evalúa la calidad científico-tecnológica del proyecto</li>
+      <li>La certificación tiene vigencia anual y debe renovarse</li>
+      <li>El proceso puede tomar entre 2 y 6 meses desde la presentación</li>
+    </ul>
+
+    <div class="req-box">
+      <h3>Documentación requerida</h3>
+      <div class="req-item"><span class="req-icon">1</span>Descripción técnica detallada del proyecto de I+D</div>
+      <div class="req-item"><span class="req-icon">2</span>CV de los investigadores involucrados</div>
+      <div class="req-item"><span class="req-icon">3</span>Presupuesto del proyecto con desglose de gastos</div>
+      <div class="req-item"><span class="req-icon">4</span>Certificado MiPyME vigente</div>
+      <div class="req-item"><span class="req-icon">5</span>Estados contables de los últimos 2 ejercicios</div>
+    </div>
+  </div>
+  <div class="side-col">
+    <div class="side-card">
+      <h4>Ventaja fiscal</h4>
+      <div class="side-stat"><div class="side-stat-val" style="color:var(--green)">+50%</div><div class="side-stat-label">Deducción adicional sobre gastos I+D</div></div>
+      <div class="side-stat"><div class="side-stat-val">2–6 m</div><div class="side-stat-label">Tiempo de certificación</div></div>
+    </div>
+    <a class="btn-bo" href="https://www.argentina.gob.ar/ciencia/anpcyt" target="_blank" rel="noopener">ANPCyT · Presentar proyecto ↗</a>
+    <a class="btn-diag" href="index.html#diagnostico">Hacer diagnóstico con IA →</a>
+    <div class="disclaimer">⚠ Este beneficio requiere evaluación y aprobación previa. El proceso puede ser largo. Consultá con un especialista antes de iniciar.</div>
+  </div>
+</div>
+
+<section class="other-benefits">
+  <h2>Otros incentivos disponibles</h2>
+  <div class="ob-grid"><a class="ob-card" href="rimi-2026.html"><div class="ob-card-name">RIMI 2026</div><div class="ob-card-desc">Amortización + IVA</div><span class="ob-card-link">Ver detalle →</span></a>
+<a class="ob-card" href="economia-conocimiento.html"><div class="ob-card-name">Economía del Conocimiento</div><div class="ob-card-desc">Tech / software</div><span class="ob-card-link">Ver detalle →</span></a>
+<a class="ob-card" href="credito-capacitacion.html"><div class="ob-card-name">Crédito capacitación</div><div class="ob-card-desc">Formación de personal</div><span class="ob-card-link">Ver detalle →</span></a>
+<a class="ob-card" href="exportacion.html"><div class="ob-card-name">Exportación</div><div class="ob-card-desc">Devolución IVA</div><span class="ob-card-link">Ver detalle →</span></a>
+<a class="ob-card" href="compre-argentino.html"><div class="ob-card-name">Compre Argentino</div><div class="ob-card-desc">Contratos públicos</div><span class="ob-card-link">Ver detalle →</span></a>
+<a class="ob-card" href="contribuciones.html"><div class="ob-card-name">Contribuciones patronales</div><div class="ob-card-desc">Nuevas contrataciones</div><span class="ob-card-link">Ver detalle →</span></a>
+<a class="ob-card" href="fogar.html"><div class="ob-card-name">FOGAR / SGR</div><div class="ob-card-desc">Financiamiento</div><span class="ob-card-link">Ver detalle →</span></a>
+</div>
+</section>
+
+<footer>
+  <div class="footer-logo">RIMI <span>Agent</span></div>
+  <div style="display:flex;gap:18px;">
+    <a href="https://www.boletinoficial.gob.ar" target="_blank">Boletín Oficial</a>
+    <a href="index.html">Inicio</a>
+  </div>
+  <span>Herramienta orientativa. Consultá con un contador. © 2026 RIMI Agent</span>
+</footer>
+
+<script>
+document.addEventListener('contextmenu',e=>e.preventDefault());
+document.addEventListener('selectstart',e=>e.preventDefault());
+document.addEventListener('keydown',e=>{
+  const b=(e.ctrlKey||e.metaKey)&&['u','s','a','c','p'].includes(e.key.toLowerCase())||
+    e.key==='F12'||(e.ctrlKey&&e.shiftKey&&['i','j','c'].includes(e.key.toLowerCase()));
+  if(b){e.preventDefault();return false;}
+});
+(function(){const t=160;setInterval(()=>{const s=performance.now();debugger;if(performance.now()-s>t)document.body.innerHTML='<div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;background:#F5F2EC;color:#1A1916">⚠ Acceso no autorizado</div>';},1200);})();
+</script>
+
+</body></html>
